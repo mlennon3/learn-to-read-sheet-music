@@ -5,12 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import org.puredata.android.io.AudioParameters;
 import org.puredata.android.service.PdService;
@@ -83,15 +87,24 @@ public class NativeMicrophone extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void addListener(final Callback callback) {
+    private void triggerNote(int n) {
+        Log.e("WTFWTFltrigger", " hey I will trigger something: " + n );
+        PdBase.sendFloat("midinote", n);
+        PdBase.sendBang("trigger");
+    }
+
+    @ReactMethod
+    public void addListener() {
         Log.e("WTFWTFl", " adding listener...");
 
         if (dispatcher != null) {
             dispatcher.addListener("pitch", new PdListener.Adapter() {
                 @Override
                 public void receiveFloat(String source, final float floatReceived) {
-                    Log.e("WTFWTFl", " hey I reiceived something:  " + floatReceived);
-                    callback.invoke(floatReceived);
+                    Log.e("WTFWTFl", " hey I reiceived something: " + floatReceived );
+                    WritableMap params = Arguments.createMap();
+                    params.putDouble("pitch", floatReceived);
+                    sendEvent((ReactApplicationContext) context, "pitchHeard", params);
                 }
             });
             Log.e("WTFWTFl", " hey dispatcher is ALL COOL and I was ableto addListener!");
@@ -99,8 +112,12 @@ public class NativeMicrophone extends ReactContextBaseJavaModule {
         } else {
             Log.e("WTFWTFl", " hey dispatcher is nul");
         }
-
     }
+
+    private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
+        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+    }
+
 
     private void loadPatch() throws IOException {
         try {
@@ -109,10 +126,10 @@ public class NativeMicrophone extends ReactContextBaseJavaModule {
 
             File patchFile = new File(dir, "tuner.pd");
             PdBase.openPatch(patchFile.getAbsolutePath());
-            Log.i("WTFWTFl", "able to find tuner a-ok");
+            Log.e("WTFWTFl", "able to find tuner a-ok");
 
         } catch (FileNotFoundException e) {
-            Log.i("WTFWTFl", "file not found: " + e.toString());
+            Log.e("WTFWTFl", "file not found: " + e.toString());
             e.printStackTrace();
         }
     }

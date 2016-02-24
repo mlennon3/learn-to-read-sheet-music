@@ -6,7 +6,7 @@ import React, {
   Text,
   View
 } from 'react-native';
-import NativeMicrophone from './nativeMic.android';
+import NativeMicrophone1 from './nativeMic.android';
 class LearnToReadSheetMusic extends Component {
   render() {
     return (
@@ -14,7 +14,7 @@ class LearnToReadSheetMusic extends Component {
         <Text style={styles.welcome}>
           Welcome to React Native, Michael!
         </Text>
-        <NativeMicrophone />
+        <NativeMicrophone1 />
         <Text style={styles.instructions}>
           To get started, edit index.android.js
         </Text>
