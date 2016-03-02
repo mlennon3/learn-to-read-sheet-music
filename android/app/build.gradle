@@ -75,6 +75,13 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
+task zipPDPatch(type: Zip) {
+    archiveName 'tuner.pd'
+    from '../../app/tuner.pd'
+    include 'tuner.pd'
+    destinationDir file('src/main/res/raw')
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"

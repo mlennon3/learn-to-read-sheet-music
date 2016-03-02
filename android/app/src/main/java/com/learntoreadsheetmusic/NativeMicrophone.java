@@ -131,10 +131,15 @@ public class NativeMicrophone extends ReactContextBaseJavaModule {
         } catch (FileNotFoundException e) {
             Log.e("WTFWTFl", "file not found: " + e.toString());
             e.printStackTrace();
+        } catch (IOException e) {
+            Log.e("WTFWTFl", "IOException: " + e.toString());
+
+            e.printStackTrace();
         }
     }
-
+    @ReactMethod
     public void cleanUp() {
+        Log.e("WTFWTFl", "cleanUp");
         context.unbindService(pdConnection);
     }
 
