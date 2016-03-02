@@ -45,6 +45,7 @@ public class NativeMicrophone extends ReactContextBaseJavaModule {
                 try {
                     initPd();
                     loadPatch();
+                    Log.e("WTFWTFl", "did laod patch...");
                 } catch (IOException e) {
                     Log.e(TAG, e.toString());
                 }
@@ -87,26 +88,27 @@ public class NativeMicrophone extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    private void triggerNote(int n) {
-        Log.e("WTFWTFltrigger", " hey I will trigger something: " + n );
-        PdBase.sendFloat("midinote", n);
+    public void triggerNote(int note) {
+        Log.e("WTFWTFltrigger", " hey I will trigger something: " + note );
+        PdBase.sendFloat("midinote", note);
         PdBase.sendBang("trigger");
     }
+    private PdListener myListener = new PdListener.Adapter() {
+        @Override
+        public void receiveFloat(String source, final float floatReceived) {
+            Log.e("WTFWTFl", " hey I reiceived something: " + floatReceived );
+            WritableMap params = Arguments.createMap();
+            params.putDouble("pitch", floatReceived);
+            sendEvent((ReactApplicationContext) context, "pitch", params);
+        }
+    };
 
     @ReactMethod
     public void addListener() {
         Log.e("WTFWTFl", " adding listener...");
 
         if (dispatcher != null) {
-            dispatcher.addListener("pitch", new PdListener.Adapter() {
-                @Override
-                public void receiveFloat(String source, final float floatReceived) {
-                    Log.e("WTFWTFl", " hey I reiceived something: " + floatReceived );
-                    WritableMap params = Arguments.createMap();
-                    params.putDouble("pitch", floatReceived);
-                    sendEvent((ReactApplicationContext) context, "pitchHeard", params);
-                }
-            });
+            dispatcher.addListener("pitch", myListener);
             Log.e("WTFWTFl", " hey dispatcher is ALL COOL and I was ableto addListener!");
 
         } else {
@@ -119,11 +121,11 @@ public class NativeMicrophone extends ReactContextBaseJavaModule {
     }
 
 
-    private void loadPatch() throws IOException {
+    private void loadPatch() {
+        Log.e("WTFWTFl", "before laod patch...");
         try {
             File dir = context.getFilesDir();
             IoUtils.extractZipResource(context.getResources().openRawResource(R.raw.tuner), dir, true);
-
             File patchFile = new File(dir, "tuner.pd");
             PdBase.openPatch(patchFile.getAbsolutePath());
             Log.e("WTFWTFl", "able to find tuner a-ok");

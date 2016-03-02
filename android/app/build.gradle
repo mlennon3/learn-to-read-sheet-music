@@ -136,4 +136,5 @@ dependencies {
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:0.20.+"
     compile 'com.github.libpd:pd-for-android:v1.0.0-rc3'
+
 }

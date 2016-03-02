@@ -1,4 +1,4 @@
-#N canvas 557 397 479 455 10;
+#N canvas 501 241 479 455 10;
 #X floatatom 58 38 5 0 0 0 r_trigger trigger -, f 5;
 #X obj 58 68 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
@@ -19,7 +19,7 @@
 #X obj 22 1302 oscparse;
 #X obj 286 227 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 338 301 f;
+#X obj 298 302 f;
 #X obj 79 332 osc~;
 #X msg 329 85 set \$1 100 0 0;
 #X floatatom 344 39 5 0 0 0 - - -, f 5;
@@ -29,12 +29,7 @@
 #X obj 232 9 loadbang;
 #X obj 246 39 20;
 #X obj 279 72 adc~;
-#X obj 335 357 send pitch1;
-#X obj 170 293 send pitch;
-#X floatatom 170 260 5 0 0 0 - - -, f 5;
-#X obj 140 181 loadbang;
-#X msg 200 183 seed 123;
-#X obj 170 228 random 200;
+#X obj 335 357 send pitch;
 #X connect 0 0 1 0;
 #X connect 1 0 11 0;
 #X connect 2 0 3 0;
@@ -47,7 +42,7 @@
 #X connect 9 0 12 0;
 #X connect 10 0 3 1;
 #X connect 11 0 2 0;
-#X connect 12 0 18 1;
+#X connect 12 0 28 0;
 #X connect 13 0 19 0;
 #X connect 14 0 13 0;
 #X connect 17 0 18 0;
@@ -60,7 +55,3 @@
 #X connect 25 0 26 0;
 #X connect 26 0 23 0;
 #X connect 27 0 24 0;
-#X connect 30 0 29 0;
-#X connect 31 0 33 0;
-#X connect 32 0 33 0;
-#X connect 33 0 30 0;
