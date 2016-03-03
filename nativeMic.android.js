@@ -18,13 +18,13 @@ var micModule = NativeModules.NativeMicrophone;
 class NativeMicrophone1 extends Component {
 	constructor(props){
 		super(props);
-		this.state = { pitch: -1 };
+		this.state = { pitch: -1, threshold: -11 };
+    this.onButtonClick = this.onButtonClick.bind(this)
+    this.toggleThreshold = this.toggleThreshold.bind(this)
 	}
   componentWillMount() {
-    console.log("LWTFWTFlJSJS mounting!!");
     micModule.addListener();
     DeviceEventEmitter.addListener('pitch', function(e: Event) {
-      console.log("LWTFWTFlJSJS received pitch callback!!!");
        this.setState({pitch: e.pitch});
     }.bind(this));
   }
@@ -32,9 +32,13 @@ class NativeMicrophone1 extends Component {
 		micModule.triggerNote(note);
   }
   componentWillUnmount(){
-    console.log("LWTFWTFlJSJS unmounting!!");
     DeviceEventEmitter.removeAllListeners('pitch')
     micModule.cleanup();
+  }
+  toggleThreshold(){
+    let amount = this.state.threshold === 1 ? 20 : 1;
+    micModule.setThreshold(amount);
+    this.setState({threshold: amount});
   }
 	render() {
     var TouchableElement = TouchableHighlight;
@@ -51,7 +55,7 @@ class NativeMicrophone1 extends Component {
 			button: {
 				textAlign: 'center',
 				color: '#ffffff',
-				marginBottom: 7,
+				marginBottom: 70,
 				borderColor: 'blue',
         borderWidth: 1,
 				borderRadius: 2
@@ -64,6 +68,14 @@ class NativeMicrophone1 extends Component {
 				The pitch I hear is: {this.state.pitch}
 			</Text>
       <View style={styles.container}>
+        <TouchableElement
+          style={styles.button}
+          onPress={this.toggleThreshold}>
+              <View>
+                <Text style={styles.buttonText}>Toggle Threshold</Text>
+              </View>
+        </TouchableElement>
+        <Text> Threshold is now: {this.state.threshold}</Text>
         <TouchableElement
           style={styles.button}
           onPress={this.onButtonClick.bind(null, 55)}>

@@ -93,6 +93,13 @@ public class NativeMicrophone extends ReactContextBaseJavaModule {
         PdBase.sendFloat("midinote", note);
         PdBase.sendBang("trigger");
     }
+
+    @ReactMethod
+    public void setThreshold(int threshold) {
+        Log.e("WTFWTFltrigger", " sending threshold:: " + threshold );
+        PdBase.sendFloat("threshold", threshold);
+    }
+
     private PdListener myListener = new PdListener.Adapter() {
         @Override
         public void receiveFloat(String source, final float floatReceived) {
