@@ -8,6 +8,9 @@ import React, {
 	NativeModules,
   DeviceEventEmitter
 } from 'react-native';
+
+var teoria = require('teoria');
+
 var {
   Platform,
   TouchableHighlight,
@@ -18,9 +21,10 @@ var micModule = NativeModules.NativeMicrophone;
 class NativeMicrophone extends Component {
 	constructor(props){
 		super(props);
-		this.state = { pitch: -1, threshold: -11 };
+		this.state = { pitch: 1, threshold: 5 };
     this.onButtonClick = this.onButtonClick.bind(this)
     this.toggleThreshold = this.toggleThreshold.bind(this)
+    this.getNote = this.getNote.bind(this)
 	}
   componentWillMount() {
     micModule.addListener();
@@ -36,9 +40,14 @@ class NativeMicrophone extends Component {
     micModule.cleanup();
   }
   toggleThreshold(){
-    let amount = this.state.threshold === 1 ? 20 : 1;
+    let amount = this.state.threshold === 5 ? 10 : 5;
     micModule.setThreshold(amount);
     this.setState({threshold: amount});
+  }
+  getNote() {
+    console.log("derpderp state is: ", this.state)
+    let note = teoria.Note.fromFrequency(this.state.pitch).note
+    return `${note.name()} ${note.accidental()}`
   }
 	render() {
     var TouchableElement = TouchableHighlight;
@@ -63,35 +72,20 @@ class NativeMicrophone extends Component {
 		});
 		return (
 			<View>
-			<Text style={styles.welcome}>
-				Derp derp
-				The pitch I hear is: {this.state.pitch}
-			</Text>
-      <View style={styles.container}>
-        <TouchableElement
-          style={styles.button}
-          onPress={this.toggleThreshold}>
-              <View>
-                <Text style={styles.buttonText}>Toggle Threshold</Text>
-              </View>
-        </TouchableElement>
-        <Text> Threshold is now: {this.state.threshold}</Text>
-        <TouchableElement
-          style={styles.button}
-          onPress={this.onButtonClick.bind(null, 55)}>
-              <View>
-                <Text style={styles.buttonText}>G string</Text>
-              </View>
-        </TouchableElement>
-        <TouchableElement
-          style={styles.button}
-          onPress={this.onButtonClick.bind(null, 59)}>
-              <View>
-                <Text style={styles.buttonText}>b string</Text>
-              </View>
+        <Text style={styles.welcome}>
+          The pitch I hear is: {this.getNote()}
+        </Text>
+        <View style={styles.container}>
+          <TouchableElement
+            style={styles.button}
+            onPress={this.toggleThreshold}>
+                <View>
+                  <Text style={styles.buttonText}>Toggle Threshold</Text>
+                </View>
           </TouchableElement>
+          <Text> Threshold is now: {this.state.threshold}</Text>
         </View>
-			</View>
+      </View>
 		);
 	}
 }

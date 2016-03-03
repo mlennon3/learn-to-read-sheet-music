@@ -6,13 +6,23 @@ import React, {
   Text,
   View
 } from 'react-native';
+var {
+  Platform,
+  TouchableHighlight,
+  TouchableNativeFeedback
+} = React;
 
 import NativeMicrophone from './nativeMic';
 
 class App extends Component {
+	constructor(props){
+		super(props);
+	}
   render() {
     return (
-      <NativeMicrophone />
+      <View>
+        <NativeMicrophone />
+      </View>
     );
   }
 }
