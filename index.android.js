@@ -6,21 +6,13 @@ import React, {
   Text,
   View
 } from 'react-native';
-import NativeMicrophone1 from './nativeMic.android';
+
+import App from './app/App';
 class LearnToReadSheetMusic extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native, Michael!
-        </Text>
-        <NativeMicrophone1 />
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
+        <App />
       </View>
     );
   }

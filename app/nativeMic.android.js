@@ -15,7 +15,7 @@ var {
 } = React;
 
 var micModule = NativeModules.NativeMicrophone;
-class NativeMicrophone1 extends Component {
+class NativeMicrophone extends Component {
 	constructor(props){
 		super(props);
 		this.state = { pitch: -1, threshold: -11 };
@@ -96,5 +96,5 @@ class NativeMicrophone1 extends Component {
 	}
 }
 
-AppRegistry.registerComponent('NativeMicrophone', () => NativeMicrophone1);
-export default NativeMicrophone1;
+AppRegistry.registerComponent('NativeMicrophone', () => NativeMicrophone);
+export default NativeMicrophone;
