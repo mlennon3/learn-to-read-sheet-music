@@ -16,12 +16,13 @@ var {
   TouchableHighlight,
   TouchableNativeFeedback
 } = React;
+let threshold = {min: 1, max: 3}
 
 var micModule = NativeModules.NativeMicrophone;
 class NativeMicrophone extends Component {
 	constructor(props){
 		super(props);
-		this.state = { pitch: 1, threshold: 5 };
+		this.state = { pitch: 1, threshold: threshold.min };
     this.onButtonClick = this.onButtonClick.bind(this)
     this.toggleThreshold = this.toggleThreshold.bind(this)
     this.getNote = this.getNote.bind(this)
@@ -40,7 +41,7 @@ class NativeMicrophone extends Component {
     micModule.cleanup();
   }
   toggleThreshold(){
-    let amount = this.state.threshold === 5 ? 10 : 5;
+    let amount = this.state.threshold === threshold.min ? threshold.max : threshold.min;
     micModule.setThreshold(amount);
     this.setState({threshold: amount});
   }
