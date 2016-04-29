@@ -29,9 +29,9 @@ class NativeMicrophone extends Component {
 	}
   componentWillMount() {
     micModule.addListener();
-    DeviceEventEmitter.addListener('pitch', function(e: Event) {
+    DeviceEventEmitter.addListener('pitch', (e: Event) => {
        this.setState({pitch: e.pitch});
-    }.bind(this));
+    });
   }
 	onButtonClick(note) {
 		micModule.triggerNote(note);
@@ -48,7 +48,8 @@ class NativeMicrophone extends Component {
   getNote() {
     console.log("derpderp state is: ", this.state)
     let note = teoria.Note.fromFrequency(this.state.pitch).note
-    return `${note.name()} ${note.accidental()}`
+    let cents = teoria.Note.fromFrequency(this.state.pitch).cents
+    return `${note.name()} ${note.accidental()} ${note.midi()} ${Math.abs(cents) > 20}`
   }
 	render() {
     var TouchableElement = TouchableHighlight;
