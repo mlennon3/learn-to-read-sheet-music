@@ -13,6 +13,7 @@ var {
 } = React;
 
 import NativeMicrophone from './nativeMic';
+import Canvas from './canvas';
 
 class App extends Component {
 	constructor(props){
@@ -22,6 +23,7 @@ class App extends Component {
     return (
       <View>
         <NativeMicrophone />
+        <Canvas />
       </View>
     );
   }

@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "patch":"cd android && gradle zipPDPatch && cd -"
+    "patch": "cd android && gradle zipPDPatch && cd -"
   },
   "dependencies": {
     "react-native": "^0.21.0",
-    "teoria": "^2.2.0"
+    "teoria": "^2.2.0",
+    "vexflow": "^1.2.45"
   }
 }
