@@ -7,7 +7,8 @@
     "patch": "cd android && gradle zipPDPatch && cd -"
   },
   "dependencies": {
-    "react-native": "^0.21.0",
+    "react-native": "^0.24.1",
+    "react": "^0.14.5",
     "teoria": "^2.2.0",
     "vexflow": "^1.2.45"
   }
