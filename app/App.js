@@ -12,7 +12,6 @@ var {
   TouchableNativeFeedback
 } = React;
 
-import NativeMicrophone from './nativeMic';
 import Canvas from './canvas';
 
 class App extends Component {
@@ -22,7 +21,6 @@ class App extends Component {
   render() {
     return (
       <View>
-        <NativeMicrophone />
         <Canvas />
       </View>
     );
