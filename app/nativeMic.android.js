@@ -38,7 +38,7 @@ class NativeMicrophone extends Component {
   }
   componentWillUnmount(){
     DeviceEventEmitter.removeAllListeners('pitch')
-    micModule.cleanup();
+    //micModule.cleanup();
   }
   toggleThreshold(){
     let amount = this.state.threshold === threshold.min ? threshold.max : threshold.min;
