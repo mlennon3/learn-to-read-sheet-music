@@ -1,18 +1,22 @@
 'use strict';
-import React, {
+
+import React, { Component } from 'react';
+import {
   AppRegistry,
-  Component,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 
 import App from './app/App';
+import Svg, {G, Rect, Path, Circle} from 'react-native-svg';
 class LearnToReadSheetMusic extends Component {
   render() {
     return (
       <View style={styles.container}>
         <App />
+        <View>
+      </View>
       </View>
     );
   }

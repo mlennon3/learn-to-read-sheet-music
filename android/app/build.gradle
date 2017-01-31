@@ -132,9 +132,10 @@ allprojects {
 }
 
 dependencies {
+    compile project(':react-native-svg')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
-    compile "com.facebook.react:react-native:0.20.+"
+    compile 'com.facebook.react:react-native:0.39.2'
     compile 'com.github.libpd:pd-for-android:v1.0.0-rc3'
 
 }

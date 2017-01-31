@@ -1,21 +1,18 @@
 'use strict';
-import React, {
+import React, { Component } from 'react';
+
+import {
 	AppRegistry,
-	Component,
 	StyleSheet,
 	Text,
 	View,
 	NativeModules,
+  Button,
   DeviceEventEmitter
 } from 'react-native';
 
 var teoria = require('teoria');
 
-var {
-  Platform,
-  TouchableHighlight,
-  TouchableNativeFeedback
-} = React;
 let threshold = {min: 1, max: 3}
 
 var micModule = NativeModules.NativeMicrophone;
@@ -52,10 +49,7 @@ class NativeMicrophone extends Component {
     return `${note.name()} ${note.accidental()} ${note.midi()} ${Math.abs(cents) > 20}`
   }
 	render() {
-    var TouchableElement = TouchableHighlight;
-			if (Platform.OS === 'android') {
-			 TouchableElement = TouchableNativeFeedback;
-    };
+    var TouchableElement = Button;
     const styles = StyleSheet.create({
       container: {
         flex: 1,
@@ -77,8 +71,9 @@ class NativeMicrophone extends Component {
         <Text style={styles.welcome}>
           The pitch I hear is: {this.getNote()}
         </Text>
-        <View style={styles.container}>
+        <View>
           <TouchableElement
+            title="Toggle Threshold"
             style={styles.button}
             onPress={this.toggleThreshold}>
                 <View>
