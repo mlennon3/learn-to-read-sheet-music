@@ -17,40 +17,23 @@ class App extends Component {
     super(props);
     this.state = {
       notes: [
-        // A quarter-note C.
-        new VF.StaveNote({clef: "treble", keys: ["c/4"], duration: "q" }),
-
         // A quarter-note D.
         new VF.StaveNote({clef: "treble", keys: ["d/4"], duration: "q" }),
 
         // A quarter-note rest. Note that the key (b/4) specifies the vertical
         // position of the rest.
         new VF.StaveNote({clef: "treble", keys: ["b/4"], duration: "qr" }),
-        new VF.StaveNote({clef: "treble", keys: ["b/4"], duration: "qr" }),
 
         // A C-Major chord.
-        //      new VF.StaveNote({clef: "treble", keys: ["c/4", "e/4", "g/4"], duration: "q" })
+        new VF.StaveNote({clef: "treble", keys: ["c/4", "e/4", "g/4"], duration: "q" })
       ]
     }
   }
   addNotes() {
-    this.setState({ notes: [
-      // A quarter-note C.
-      new VF.StaveNote({clef: "treble", keys: ["c/4"], duration: "q" }),
-
-      // A quarter-note D.
-      new VF.StaveNote({clef: "treble", keys: ["d/4"], duration: "q" }),
-
-      // A quarter-note rest. Note that the key (b/4) specifies the vertical
-      // position of the rest.
-      new VF.StaveNote({clef: "treble", keys: ["b/4"], duration: "qr" }),
-
-      // A C-Major chord.
-      new VF.StaveNote({clef: "treble", keys: ["c/4", "e/4", "g/4"], duration: "q" })
-    ]
-    })
+    var chord = new VF.StaveNote({clef: "treble", keys: ["c/4", "e/4", "g/4"], duration: "q" });
+    this.state.notes.push(chord);
+    this.setState({notes: this.state.notes})
   }
-
   render() {
     return (
       <View>
