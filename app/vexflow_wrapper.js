@@ -20,20 +20,6 @@ export default class VexflowWrapper extends Component {
       super(props);
   }
   render() {
-//    var notes = [
-//      // A quarter-note C.
-//      new VF.StaveNote({clef: "treble", keys: ["c/4"], duration: "q" }),
-//
-//      // A quarter-note D.
-//      new VF.StaveNote({clef: "treble", keys: ["d/4"], duration: "q" }),
-//
-//      // A quarter-note rest. Note that the key (b/4) specifies the vertical
-//      // position of the rest.
-//      new VF.StaveNote({clef: "treble", keys: ["b/4"], duration: "qr" }),
-//
-//      // A C-Major chord.
-//      new VF.StaveNote({clef: "treble", keys: ["c/4", "e/4", "g/4"], duration: "q" })
-//    ];
     var voice = new VF.Voice({num_beats: 4, beat_value: 4});
     voice.addTickables(this.props.notes);
     var width = 300
