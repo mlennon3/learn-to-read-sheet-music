@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import App from './app/App';
-import Svg, {G, Rect, Path, Circle} from 'react-native-svg';
+
 class LearnToReadSheetMusic extends Component {
   render() {
     return (

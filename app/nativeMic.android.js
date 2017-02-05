@@ -11,45 +11,33 @@ import {
   DeviceEventEmitter
 } from 'react-native';
 
-var teoria = require('teoria');
-
 let threshold = {min: 1, max: 3}
 
 var micModule = NativeModules.NativeMicrophone;
 class NativeMicrophone extends Component {
 	constructor(props){
 		super(props);
-		this.state = { pitch: 1, threshold: threshold.min };
-    this.onButtonClick = this.onButtonClick.bind(this)
+		this.state = { threshold: threshold.min };
     this.toggleThreshold = this.toggleThreshold.bind(this)
-    this.getNote = this.getNote.bind(this)
+    this.onPitchChange = this.props.onPitchChange;
 	}
   componentWillMount() {
     micModule.addListener();
     DeviceEventEmitter.addListener('pitch', (e: Event) => {
-       this.setState({pitch: e.pitch});
+       this.onPitchChange(e.pitch)
     });
-  }
-	onButtonClick(note) {
-		micModule.triggerNote(note);
   }
   componentWillUnmount(){
     DeviceEventEmitter.removeAllListeners('pitch')
-    //micModule.cleanup();
+    micModule.cleanUp();
   }
   toggleThreshold(){
     let amount = this.state.threshold === threshold.min ? threshold.max : threshold.min;
     micModule.setThreshold(amount);
     this.setState({threshold: amount});
   }
-  getNote() {
-    console.log("derpderp state is: ", this.state)
-    let note = teoria.Note.fromFrequency(this.state.pitch).note
-    let cents = teoria.Note.fromFrequency(this.state.pitch).cents
-    return `${note.name()} ${note.accidental()} ${note.midi()} ${Math.abs(cents) > 20}`
-  }
+
 	render() {
-    var TouchableElement = Button;
     const styles = StyleSheet.create({
       container: {
         flex: 1,
@@ -68,18 +56,15 @@ class NativeMicrophone extends Component {
 		});
 		return (
 			<View>
-        <Text style={styles.welcome}>
-          The pitch I hear is: {this.getNote()}
-        </Text>
         <View>
-          <TouchableElement
+          <Button
             title="Toggle Threshold"
             style={styles.button}
             onPress={this.toggleThreshold}>
                 <View>
                   <Text style={styles.buttonText}>Toggle Threshold</Text>
                 </View>
-          </TouchableElement>
+          </Button>
           <Text> Threshold is now: {this.state.threshold}</Text>
         </View>
       </View>
