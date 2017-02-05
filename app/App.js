@@ -9,14 +9,11 @@ import {
   View
 } from 'react-native';
 
-import NativeMicrophone from './nativeMic';
-import VexflowWrapper from './vexflow_wrapper';
-
+import Play from './Play.js';
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      pitch: 0,
       notes: [
         // A quarter-note D.
         new VF.StaveNote({clef: "treble", keys: ["d/4"], duration: "q" }),
@@ -38,15 +35,10 @@ class App extends Component {
   render() {
     return (
       <View>
-       <Text>
-         ptch is: {this.state.pitch}
-       </Text>
-      <NativeMicrophone onPitchChange={(pitch) => this.setState({pitch: pitch})}/>
-
-      <VexflowWrapper notes={this.state.notes}/>
-      <Button
-        title="Change notes"
-        onPress={this.addNotes.bind(this)}
+        <Play notes={this.state.notes} />
+        <Button
+          title="Change notes"
+          onPress={this.addNotes.bind(this)}
         />
       </View>
     );

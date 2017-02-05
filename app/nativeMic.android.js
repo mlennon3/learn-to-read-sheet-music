@@ -19,6 +19,7 @@ class NativeMicrophone extends Component {
 		super(props);
 		this.state = { threshold: threshold.min };
     this.toggleThreshold = this.toggleThreshold.bind(this)
+    micModule.setThreshold(threshold.min);
     this.onPitchChange = this.props.onPitchChange;
 	}
   componentWillMount() {
@@ -38,31 +39,14 @@ class NativeMicrophone extends Component {
   }
 
 	render() {
-    const styles = StyleSheet.create({
-      container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-      },
-			button: {
-				textAlign: 'center',
-				color: '#ffffff',
-				marginBottom: 70,
-				borderColor: 'blue',
-        borderWidth: 1,
-				borderRadius: 2
-			}
-		});
 		return (
 			<View>
         <View>
           <Button
             title="Toggle Threshold"
-            style={styles.button}
             onPress={this.toggleThreshold}>
                 <View>
-                  <Text style={styles.buttonText}>Toggle Threshold</Text>
+                  <Text >Toggle Threshold1</Text>
                 </View>
           </Button>
           <Text> Threshold is now: {this.state.threshold}</Text>
