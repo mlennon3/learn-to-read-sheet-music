@@ -34,10 +34,10 @@ class Play extends Component {
     let currentNote = this.state.notes.get(this.state.currentNoteIndex);
 
     // Only supports single notes, not chords
-    console.log('fcurrentNote is: ', currentNote);
-    var foo = currentNote.keys[0].replace('/', '');
-    console.log('foo is: ', foo);
-    return foo;
+//    console.log('currentNote is: ', currentNote);
+//    var foo = currentNote.keys[0].replace('/', '');
+//    console.log('foo is: ', foo);
+    return currentNote.keys[0].replace('/', '');;
   }
   isRightNote() {
     let currentNote = teoria.note.fromFrequency(this.state.pitch).note;
@@ -50,14 +50,16 @@ class Play extends Component {
   }
   onPitchChange(pitch)  {
     var newNotes = this.state.notes;
+    var newIndex = this.state.currentNoteIndex;
     if (this.isRightNote().bool) {
       let newKey = this.state.notes.get(this.state.currentNoteIndex).setKeyStyle(0, {shadowBlur:15, shadowColor:'green', fillStyle:'green'});
       newNotes = this.state.notes.set(this.state.currentNoteIndex, newKey);
+      newIndex = newIndex + 1;
     }
-    console.log('newNotes is: ', newNotes);
     this.setState({
       pitch: pitch,
-     notes: newNotes
+      notes: newNotes,
+      currentNoteIndex: newIndex
     });
   }
   render() {
