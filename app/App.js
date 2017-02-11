@@ -16,14 +16,16 @@ class App extends Component {
     this.state = {
       notes: [
         // A quarter-note D.
+        new VF.StaveNote({clef: "treble", keys: ["e/3"], duration: "q" }),
+
+        new VF.StaveNote({clef: "treble", keys: ["a/3"], duration: "q" }),
         new VF.StaveNote({clef: "treble", keys: ["d/4"], duration: "q" }),
+        new VF.StaveNote({clef: "treble", keys: ["g/4"], duration: "q" }),
 
-        // A quarter-note rest. Note that the key (b/4) specifies the vertical
-        // position of the rest.
-        new VF.StaveNote({clef: "treble", keys: ["b/4"], duration: "qr" }),
+        new VF.StaveNote({clef: "treble", keys: ["b/4"], duration: "q" }),
 
-        // A C-Major chord.
-        new VF.StaveNote({clef: "treble", keys: ["c/4", "e/4", "g/4"], duration: "q" })
+        new VF.StaveNote({clef: "treble", keys: ["e/5"], duration: "q" }),
+
       ]
     }
   }
