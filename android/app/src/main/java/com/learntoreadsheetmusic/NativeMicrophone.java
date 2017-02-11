@@ -29,7 +29,8 @@ import java.io.IOException;
 
 public class NativeMicrophone extends ReactContextBaseJavaModule {
     private static final String TAG = "NativeMicrophone";
-
+    private final double pitchChangeThreshold = 0.02;
+    private float lastPitch = 0;
     private PdUiDispatcher dispatcher;
 
     private PdService pdService = null;
@@ -103,10 +104,13 @@ public class NativeMicrophone extends ReactContextBaseJavaModule {
     private PdListener myListener = new PdListener.Adapter() {
         @Override
         public void receiveFloat(String source, final float floatReceived) {
-            Log.e("WTFWTFl", " hey I reiceived something: " + floatReceived );
-            WritableMap params = Arguments.createMap();
-            params.putDouble("pitch", floatReceived);
-            sendEvent((ReactApplicationContext) context, "pitch", params);
+            if ((Math.abs(lastPitch - floatReceived) / lastPitch > pitchChangeThreshold) ) {
+              lastPitch = floatReceived;
+              Log.e("WTFWTFl", " hey I reiceived something: " + floatReceived );
+              WritableMap params = Arguments.createMap();
+              params.putDouble("pitch", floatReceived);
+              sendEvent((ReactApplicationContext) context, "pitch", params);
+            }
         }
     };
 
